@@ -1,10 +1,10 @@
-﻿using System.Buffers;
+﻿namespace Hum.Server.Audio;
 
-namespace Hum.Server.Audio;
+public record DecodeResult(float[] Samples, int SampleRate, ushort Channels);
 
 public class PcmDecoder
 {
-    public float[] Decode(byte[] wavBytes)
+    public DecodeResult Decode(byte[] wavBytes)
     {
         if (wavBytes.Length < 44)
             throw new InvalidAudioDataException("WAV data is too short (minimum 44 bytes for header).");
@@ -23,6 +23,8 @@ public class PcmDecoder
         if (channels != 1 && channels != 2)
             throw new InvalidAudioDataException($"Unsupported channel count {channels}. Only mono (1) and stereo (2) are supported.");
 
+        int sampleRate = BitConverter.ToInt32(wavBytes, 24);
+
         ushort bitsPerSample = BitConverter.ToUInt16(wavBytes, 34);
         if (bitsPerSample != 16)
             throw new InvalidAudioDataException($"Unsupported bits per sample {bitsPerSample}. Only 16-bit PCM is supported.");
@@ -32,7 +34,7 @@ public class PcmDecoder
         int dataStart = dataOffset + 8;
 
         if (dataSize <= 0)
-            return [];
+            return new DecodeResult(Array.Empty<float>(), sampleRate, channels);
 
         int availableBytes = wavBytes.Length - dataStart;
         int actualDataSize = Math.Min(dataSize, availableBytes);
@@ -62,7 +64,7 @@ public class PcmDecoder
             }
         }
 
-        return result;
+        return new DecodeResult(result, sampleRate, channels);
     }
 
     private static int FindDataChunk(byte[] wavBytes)

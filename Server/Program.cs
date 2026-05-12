@@ -1,11 +1,16 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Hum.Server.Audio;
+using Hum.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<PcmDecoder>();
+builder.Services.AddSingleton<SpectrogramBuilder>();
+builder.Services.AddSingleton<PeakPicker>();
+builder.Services.AddSingleton<FingerprintGenerator>();
+builder.Services.AddSingleton<FingerprintService>();
 
 var app = builder.Build();
 
