@@ -4,6 +4,26 @@ using Hum.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize =
+        builder.Configuration.GetValue<long?>("Kestrel:Limits:MaxRequestBodySize")
+        ?? 35L * 1024 * 1024;
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient", policy =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.WithOrigins("https://localhost:7287", "http://localhost:5116")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        }
+    });
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -42,6 +62,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("AllowBlazorClient");
 
 app.MapRazorPages();
 app.MapControllers();
