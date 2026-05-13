@@ -1,4 +1,5 @@
 using Hum.Server.Audio;
+using Hum.Server.Data;
 using Hum.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,11 @@ builder.Services.AddSingleton<SpectrogramBuilder>();
 builder.Services.AddSingleton<PeakPicker>();
 builder.Services.AddSingleton<FingerprintGenerator>();
 builder.Services.AddSingleton<FingerprintService>();
+
+var connString = builder.Configuration.GetConnectionString("Default")
+    ?? "Data Source=hum.db";
+var dbInit = new DbInitializer(connString);
+dbInit.Initialize();
 
 var app = builder.Build();
 
