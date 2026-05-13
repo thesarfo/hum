@@ -39,4 +39,10 @@ public class FingerprintStore
 
         return rows.Select(r => (r.SongId, r.TimeOffset)).ToList();
     }
+
+    public async Task<Song?> GetSongAsync(int songId)
+    {
+        var db = new SQLiteAsyncConnection(_connectionString);
+        return await db.FindAsync<Song>(songId);
+    }
 }

@@ -18,6 +18,9 @@ var connString = builder.Configuration.GetConnectionString("Default")
 var dbInit = new DbInitializer(connString);
 dbInit.Initialize();
 
+builder.Services.AddSingleton(new FingerprintStore(connString));
+builder.Services.AddSingleton<MatcherService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
