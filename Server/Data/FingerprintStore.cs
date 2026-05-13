@@ -30,4 +30,13 @@ public class FingerprintStore
             }
         });
     }
+
+    public async Task<IReadOnlyList<(int SongId, int TimeOffset)>> LookupHashAsync(uint hash)
+    {
+        var db = new SQLiteAsyncConnection(_connectionString);
+        var rows = await db.QueryAsync<FingerprintRecord>(
+            "SELECT SongId, TimeOffset FROM Fingerprints WHERE Hash = ?", hash);
+
+        return rows.Select(r => (r.SongId, r.TimeOffset)).ToList();
+    }
 }
