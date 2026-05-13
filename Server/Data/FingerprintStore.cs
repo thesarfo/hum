@@ -40,6 +40,14 @@ public class FingerprintStore
         return rows.Select(r => (r.SongId, r.TimeOffset)).ToList();
     }
 
+    public async Task<int> InsertSongAsync(string title, string artist, double duration)
+    {
+        var db = new SQLiteAsyncConnection(_connectionString);
+        var song = new Song { Title = title, Artist = artist, Duration = duration };
+        await db.InsertAsync(song);
+        return song.Id;
+    }
+
     public async Task<Song?> GetSongAsync(int songId)
     {
         var db = new SQLiteAsyncConnection(_connectionString);
