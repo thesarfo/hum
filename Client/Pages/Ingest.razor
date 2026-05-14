@@ -1,0 +1,129 @@
+@page "/ingest"
+
+@using Hum.Client.Services
+@inject SongService SongService
+
+<div class="ingest-page">
+    <div class="ingest-header">
+        <h1 class="ingest-title">Register a Song</h1>
+        <p class="ingest-subtitle">Upload a WAV file and add it to the fingerprint database</p>
+    </div>
+
+    <div class="ingest-body">
+        @switch (_state)
+        {
+            case IngestState.Form:
+                <div class="card form-card">
+                    <div class="form-field">
+                        <label class="form-label" for="title">Title</label>
+                        <input id="title" class="form-input" type="text" @bind="_title" @bind:event="oninput" placeholder="Enter song title" />
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label" for="artist">Artist</label>
+                        <input id="artist" class="form-input" type="text" @bind="_artist" @bind:event="oninput" placeholder="Enter artist name" />
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label" for="file">WAV File</label>
+                        <InputFile id="file" class="form-file" accept=".wav" OnChange="@OnFileSelected" />
+                        @if (_fileName is not null)
+                        {
+                            <p class="file-name">@_fileName</p>
+                        }
+                    </div>
+                    <button class="btn-submit" disabled="@(!CanSubmit)" @onclick="SubmitAsync">
+                        Register
+                    </button>
+                </div>
+                break;
+
+            case IngestState.Submitting:
+                <div class="card form-card">
+                    <div class="submitting-indicator">
+                        <p class="submitting-text">Registering song and generating fingerprint...</p>
+                    </div>
+                </div>
+                break;
+
+            case IngestState.Success:
+                <div class="card form-card success-card">
+                    <p class="success-icon">&#10003;</p>
+                    <h2 class="success-title">Song Registered</h2>
+                    <p class="success-id">Song ID: <span>@_songId</span></p>
+                </div>
+                <button class="btn-retry" @onclick="Reset">Register Another</button>
+                break;
+
+            case IngestState.Error:
+                <div class="card form-card">
+                    <div class="error-banner">
+                        <p>@_error</p>
+                    </div>
+                    <button class="btn-submit" @onclick="Reset">Try Again</button>
+                </div>
+                break;
+        }
+    </div>
+</div>
+
+@code {
+    private enum IngestState { Form, Submitting, Success, Error }
+
+    private IngestState _state = IngestState.Form;
+    private string _title = string.Empty;
+    private string _artist = string.Empty;
+    private string? _wavBase64;
+    private string? _fileName;
+    private int _songId;
+    private string? _error;
+
+    private bool CanSubmit =>
+        !string.IsNullOrWhiteSpace(_title) &&
+        !string.IsNullOrWhiteSpace(_artist) &&
+        _wavBase64 is not null;
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file is null) return;
+
+        _fileName = file.Name;
+
+        using var stream = file.OpenReadStream(50 * 1024 * 1024);
+        using var ms = new MemoryStream();
+        await stream.CopyToAsync(ms);
+        _wavBase64 = Convert.ToBase64String(ms.ToArray());
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (!CanSubmit) return;
+
+        _state = IngestState.Submitting;
+
+        try
+        {
+            _songId = await SongService.IngestSongAsync(_title, _artist, _wavBase64!);
+            _state = IngestState.Success;
+        }
+        catch (HttpRequestException ex)
+        {
+            _error = ex.Message;
+            _state = IngestState.Error;
+        }
+        catch (Exception ex)
+        {
+            _error = "An unexpected error occurred: " + ex.Message;
+            _state = IngestState.Error;
+        }
+    }
+
+    private void Reset()
+    {
+        _state = IngestState.Form;
+        _title = string.Empty;
+        _artist = string.Empty;
+        _wavBase64 = null;
+        _fileName = null;
+        _error = null;
+    }
+}

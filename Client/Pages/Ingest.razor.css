@@ -1,0 +1,244 @@
+.ingest-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
+    gap: 48px;
+}
+
+.ingest-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ingest-title {
+    font-family: 'Pastiche Grotesque', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.64px;
+    color: #f5fbff;
+    margin: 0;
+}
+
+.ingest-subtitle {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #a1a1a1;
+    margin: 0;
+}
+
+.ingest-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 480px;
+}
+
+.card {
+    background: #0b0b0b;
+    border-radius: 8px;
+    padding: 48px;
+    width: 100%;
+}
+
+.form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #a1a1a1;
+}
+
+.form-input {
+    background: #141414;
+    color: #f5fbff;
+    border: 0.5px solid #a1a1a1;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: 'Inter Display', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #0076dc;
+}
+
+.form-input::placeholder {
+    color: #595e76;
+}
+
+.form-file {
+    background: #141414;
+    color: #f5fbff;
+    border: 0.5px solid #a1a1a1;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: 'Inter Display', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.form-file::file-selector-button {
+    background: #0076dc;
+    color: #e6f5ff;
+    border: none;
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: 'Inter Display', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+.file-name {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 12px;
+    color: #0aa289;
+    margin: 0;
+}
+
+.btn-submit {
+    background: #0076dc;
+    color: #e6f5ff;
+    border: none;
+    border-radius: 100px;
+    padding: 12px 32px;
+    font-family: 'Inter Display', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    min-width: 200px;
+    align-self: center;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: #0979c6;
+}
+
+.btn-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.submitting-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 0;
+}
+
+.submitting-text {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 16px;
+    color: #a1a1a1;
+    margin: 0;
+    text-align: center;
+}
+
+.success-card {
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.success-icon {
+    font-size: 32px;
+    color: #0aa289;
+    margin: 0;
+}
+
+.success-title {
+    font-family: 'Pastiche Grotesque', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.25px;
+    color: #f5fbff;
+    margin: 0;
+}
+
+.success-id {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 16px;
+    color: #a1a1a1;
+    margin: 0;
+}
+
+.success-id span {
+    color: #0aa289;
+    font-weight: 500;
+}
+
+.btn-retry {
+    background: transparent;
+    color: #0076dc;
+    border: none;
+    border-radius: 0;
+    padding: 4px 0;
+    font-family: 'Inter Display', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: -12px;
+}
+
+.btn-retry:hover {
+    color: #0979c6;
+}
+
+.error-banner {
+    background: #141414;
+    border: 0.5px solid #d03845;
+    border-radius: 8px;
+    padding: 16px 24px;
+    width: 100%;
+    text-align: center;
+}
+
+.error-banner p {
+    font-family: 'Inter Display', sans-serif;
+    font-size: 14px;
+    color: #d03845;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .ingest-title {
+        font-size: 32px;
+        letter-spacing: -0.51px;
+    }
+
+    .ingest-subtitle {
+        font-size: 16px;
+    }
+
+    .card {
+        padding: 32px 24px;
+    }
+
+    .form-input {
+        font-size: 14px;
+    }
+}
