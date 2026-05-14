@@ -1,3 +1,13 @@
+// Audio capture approach: AudioContext + ScriptProcessorNode → manual PCM WAV encoding.
+// MediaRecorder is intentionally not used — it outputs WebM/Opus in Chrome/Firefox,
+// which the server's PcmDecoder cannot parse (PCM WAV only).
+//
+// Browser compatibility:
+//   Chrome/Firefox: AudioContext + ScriptProcessorNode works. ScriptProcessorNode is
+//     deprecated in favour of AudioWorklet, but both browsers still support it.
+//   Safari: webkitAudioContext fallback (line below) covers Safari 6+.
+//     ScriptProcessorNode is supported. getUserMedia requires HTTPS in Safari 11+.
+//     Safari does not support AudioWorklet in all versions, so we keep ScriptProcessorNode.
 window.captureAudio = function captureAudio(durationMs) {
     if (durationMs === undefined) durationMs = 5000;
     var sampleRate = 44100;
