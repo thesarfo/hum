@@ -1,62 +1,70 @@
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+.nav-header {
+    background: #000;
+    border-bottom: 0.5px solid #1a1a1a;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.top-row {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-.navbar-brand {
-    font-size: 1.1rem;
+.nav-brand {
+    font-family: 'Pastiche Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #f5fbff;
+    text-decoration: none;
+    letter-spacing: -0.3px;
 }
 
-.oi {
-    width: 2rem;
-    font-size: 1.1rem;
-    vertical-align: text-top;
-    top: -2px;
+.nav-links {
+    display: flex;
+    gap: 4px;
 }
 
-.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+.nav-link-item {
+    font-family: 'Inter Display', 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #a1a1a1;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
+.nav-link-item:hover {
+    color: #f5fbff;
+    background: #141414;
+}
+
+.nav-link-item.active {
+    color: #f5fbff;
+    background: #141414;
+}
+
+@media (max-width: 375px) {
+    .nav-inner {
+        padding: 0 16px;
     }
 
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
+    .nav-brand {
+        font-size: 17px;
     }
 
-    .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
-
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
-
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
-
-@media (min-width: 641px) {
-    .navbar-toggler {
-        display: none;
-    }
-
-    .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
+    .nav-link-item {
+        font-size: 13px;
+        padding: 6px 8px;
     }
 }
