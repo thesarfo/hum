@@ -1,6 +1,8 @@
 window.captureAudio = function captureAudio(durationMs) {
     if (durationMs === undefined) durationMs = 5000;
     var sampleRate = 44100;
+    // Browsers may ignore this hint and use the hardware rate (e.g. 48 000 Hz).
+    // The server resamples to 44 100 Hz when the WAV header declares a different rate.
 
     return navigator.mediaDevices.getUserMedia({ audio: true })
         .then(function(stream) {
