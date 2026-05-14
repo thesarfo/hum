@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using MathNet.Numerics.IntegralTransforms;
 
 namespace Hum.Server.Audio;
@@ -8,8 +8,20 @@ public class SpectrogramBuilder
     public const int DefaultFftSize = 1024;
     public const int DefaultHopSize = 512;
 
-    public float[][] Build(float[] samples, int fftSize = DefaultFftSize, int hopSize = DefaultHopSize)
+    public int FftSize { get; }
+    public int HopSize { get; }
+
+    public SpectrogramBuilder(IConfiguration config)
     {
+        FftSize = config.GetValue<int>("Fingerprinting:FftSize", DefaultFftSize);
+        HopSize = config.GetValue<int>("Fingerprinting:HopSize", DefaultHopSize);
+    }
+
+    public float[][] Build(float[] samples)
+    {
+        int fftSize = FftSize;
+        int hopSize = HopSize;
+
         if (fftSize <= 0 || hopSize <= 0)
             throw new ArgumentOutOfRangeException(nameof(fftSize), "FFT size and hop size must be positive.");
 

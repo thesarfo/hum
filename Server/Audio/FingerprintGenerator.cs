@@ -1,4 +1,4 @@
-﻿namespace Hum.Server.Audio;
+namespace Hum.Server.Audio;
 
 /*
  * Hash bit layout (32-bit unsigned):
@@ -11,6 +11,17 @@ public class FingerprintGenerator
     public const int FanOut = 5;
     public const int MinTimeDelta = 1;
     public const int MaxTimeDelta = 256;
+
+    private readonly int _fanOut;
+    private readonly int _minTimeDelta;
+    private readonly int _maxTimeDelta;
+
+    public FingerprintGenerator(IConfiguration config)
+    {
+        _fanOut       = config.GetValue<int>("Fingerprinting:FanOut",       FanOut);
+        _minTimeDelta = config.GetValue<int>("Fingerprinting:MinTimeDelta", MinTimeDelta);
+        _maxTimeDelta = config.GetValue<int>("Fingerprinting:MaxTimeDelta", MaxTimeDelta);
+    }
 
     public List<(uint Hash, int TimeOffset)> Generate(List<Peak> peaks)
     {
@@ -25,14 +36,14 @@ public class FingerprintGenerator
             var anchor = sorted[i];
             int pairsAdded = 0;
 
-            for (int j = i + 1; j < sorted.Count && pairsAdded < FanOut; j++)
+            for (int j = i + 1; j < sorted.Count && pairsAdded < _fanOut; j++)
             {
                 var target = sorted[j];
                 int delta = target.TimeFrame - anchor.TimeFrame;
 
-                if (delta < MinTimeDelta)
+                if (delta < _minTimeDelta)
                     continue;
-                if (delta > MaxTimeDelta)
+                if (delta > _maxTimeDelta)
                     break;
 
                 uint hash = ((uint)anchor.FrequencyBin & 0x3FF) << 22

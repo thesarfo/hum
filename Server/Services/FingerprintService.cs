@@ -29,7 +29,7 @@ public class FingerprintService
     public List<(uint Hash, int TimeOffset)> GenerateFingerprints(byte[] wavBytes)
     {
         var decoded = _decoder.Decode(wavBytes);
-        int hopSize = SpectrogramBuilder.DefaultHopSize;
+        int hopSize = _spectrogram.HopSize;
 
         float[] samples = decoded.SampleRate == TargetSampleRate
             ? decoded.Samples
