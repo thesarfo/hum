@@ -1,7 +1,147 @@
-﻿@page "/"
+@page "/"
 
-<PageTitle>Hum</PageTitle>
+@using Hum.Client.Services
+@using Hum.Shared.Models
+@inject AudioCapture AudioCapture
+@inject SongService SongService
+@implements IDisposable
 
-<h1>Hum</h1>
+<div class="identify-page">
+    <div class="identify-header">
+        <h1 class="identify-title">Hum</h1>
+        <p class="identify-subtitle">Identify any song from a short recording</p>
+    </div>
 
-<p>Audio fingerprinting service. Identify songs from short mic recordings.</p>
+    <div class="identify-body">
+        @switch (_state)
+        {
+            case IdentifyState.Idle:
+                <button class="btn-record" @onclick="StartRecording">
+                    Start Recording
+                </button>
+                break;
+
+            case IdentifyState.Recording:
+                <div class="recording-indicator">
+                    <div class="recording-pulse"></div>
+                    <p class="recording-text">Recording... @_countdown s</p>
+                </div>
+                break;
+
+            case IdentifyState.MatchFound:
+                <div class="card result-card">
+                    <h2 class="result-title">@_result!.Title</h2>
+                    <p class="result-artist">@_result.Artist</p>
+                    <p class="result-confidence">Confidence: @_result.Confidence.ToString("F0")</p>
+                </div>
+                <button class="btn-retry" @onclick="Reset">Record Another</button>
+                break;
+
+            case IdentifyState.NoMatch:
+                <div class="card result-card result-not-found">
+                    <p class="not-found-text">No match found</p>
+                    <p class="not-found-hint">Try a longer recording or move closer to the audio source</p>
+                </div>
+                <button class="btn-retry" @onclick="Reset">Try Again</button>
+                break;
+        }
+
+        @if (!string.IsNullOrEmpty(_error))
+        {
+            <div class="error-banner">
+                <p>@_error</p>
+                <button class="btn-dismiss" @onclick="Reset">Dismiss</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private enum IdentifyState { Idle, Recording, MatchFound, NoMatch }
+
+    private IdentifyState _state = IdentifyState.Idle;
+    private MatchResultDto? _result;
+    private string? _error;
+    private int _countdown = 5;
+    private CancellationTokenSource? _cts;
+
+    protected override void OnInitialized()
+    {
+        _countdown = 5;
+    }
+
+    private async Task StartRecording()
+    {
+        _error = null;
+        _state = IdentifyState.Recording;
+        _countdown = 5;
+        _cts = new CancellationTokenSource();
+        var token = _cts.Token;
+
+        var countdownTask = RunCountdownAsync(token);
+
+        try
+        {
+            var wavBase64 = await AudioCapture.RecordAsync(5000);
+
+            if (!token.IsCancellationRequested)
+                _cts.Cancel();
+
+            if (string.IsNullOrEmpty(wavBase64))
+            {
+                _error = "Recording returned no audio data. Please try again.";
+                _state = IdentifyState.Idle;
+                return;
+            }
+
+            _result = await SongService.MatchSnippetAsync(wavBase64);
+            _state = _result is not null ? IdentifyState.MatchFound : IdentifyState.NoMatch;
+        }
+        catch (AudioCaptureException ex)
+        {
+            _error = ex.Message;
+            _state = IdentifyState.Idle;
+        }
+        catch (HttpRequestException)
+        {
+            _error = "Could not reach the server. Check your connection and try again.";
+            _state = IdentifyState.Idle;
+        }
+        finally
+        {
+            _cts?.Dispose();
+            _cts = null;
+        }
+    }
+
+    private async Task RunCountdownAsync(CancellationToken ct)
+    {
+        try
+        {
+            while (_countdown > 0 && !ct.IsCancellationRequested)
+            {
+                await Task.Delay(1000, ct);
+                if (!ct.IsCancellationRequested)
+                {
+                    _countdown--;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+        catch (TaskCanceledException) { }
+    }
+
+    private void Reset()
+    {
+        _state = IdentifyState.Idle;
+        _result = null;
+        _error = null;
+        _countdown = 5;
+    }
+
+    public void Dispose()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+}
