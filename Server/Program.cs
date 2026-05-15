@@ -8,7 +8,7 @@ builder.WebHost.ConfigureKestrel(options =>
 {
     options.Limits.MaxRequestBodySize =
         builder.Configuration.GetValue<long?>("Kestrel:Limits:MaxRequestBodySize")
-        ?? 35L * 1024 * 1024;
+        ?? 100L * 1024 * 1024;
 });
 
 builder.Services.AddCors(options =>

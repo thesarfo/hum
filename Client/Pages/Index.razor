@@ -32,7 +32,7 @@
                 <div class="card result-card">
                     <h2 class="result-title">@_result!.Title</h2>
                     <p class="result-artist">@_result.Artist</p>
-                    <p class="result-confidence">Confidence: @_result.Confidence.ToString("F0")</p>
+                    <p class="result-confidence">Confidence: @(_result.Confidence.ToString("P1"))</p>
                 </div>
                 <button class="btn-retry" @onclick="Reset">Record Another</button>
                 break;
@@ -62,19 +62,19 @@
     private IdentifyState _state = IdentifyState.Idle;
     private MatchResultDto? _result;
     private string? _error;
-    private int _countdown = 5;
+    private int _countdown = 10;
     private CancellationTokenSource? _cts;
 
     protected override void OnInitialized()
     {
-        _countdown = 5;
+        _countdown = 10;
     }
 
     private async Task StartRecording()
     {
         _error = null;
         _state = IdentifyState.Recording;
-        _countdown = 5;
+        _countdown = 10;
         _cts = new CancellationTokenSource();
         var token = _cts.Token;
 
@@ -82,7 +82,7 @@
 
         try
         {
-            var wavBase64 = await AudioCapture.RecordAsync(5000);
+            var wavBase64 = await AudioCapture.RecordAsync(10000);
 
             if (!token.IsCancellationRequested)
                 _cts.Cancel();

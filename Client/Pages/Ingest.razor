@@ -24,13 +24,17 @@
                     </div>
                     <div class="form-field">
                         <label class="form-label" for="file">WAV File</label>
-                        <InputFile id="file" class="form-file" accept=".wav" OnChange="@OnFileSelected" />
-                        @if (_fileName is not null)
+                        <InputFile id="file" class="form-file" accept=".wav" OnChange="@OnFileSelected" disabled="@_readingFile" />
+                        @if (_readingFile)
+                        {
+                            <p class="file-reading">Reading file...</p>
+                        }
+                        else if (_fileName is not null)
                         {
                             <p class="file-name">@_fileName</p>
                         }
                     </div>
-                    <button class="btn-submit" disabled="@(!CanSubmit)" @onclick="SubmitAsync">
+                    <button class="btn-submit" disabled="@(!CanSubmit || _readingFile)" @onclick="SubmitAsync">
                         Register
                     </button>
                 </div>
@@ -76,6 +80,8 @@
     private int _songId;
     private string? _error;
 
+    private bool _readingFile;
+
     private bool CanSubmit =>
         !string.IsNullOrWhiteSpace(_title) &&
         !string.IsNullOrWhiteSpace(_artist) &&
@@ -87,11 +93,16 @@
         if (file is null) return;
 
         _fileName = file.Name;
+        _readingFile = true;
+        StateHasChanged();
 
         using var stream = file.OpenReadStream(50 * 1024 * 1024);
         using var ms = new MemoryStream();
         await stream.CopyToAsync(ms);
         _wavBase64 = Convert.ToBase64String(ms.ToArray());
+
+        _readingFile = false;
+        StateHasChanged();
     }
 
     private async Task SubmitAsync()
@@ -99,6 +110,7 @@
         if (!CanSubmit) return;
 
         _state = IngestState.Submitting;
+        StateHasChanged();
 
         try
         {

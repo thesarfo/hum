@@ -1,5 +1,6 @@
 ﻿using Hum.Server.Data;
 using Hum.Shared.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Hum.Server.Services;
 
@@ -7,24 +8,29 @@ public class MatcherService
 {
     private readonly FingerprintStore _store;
     private readonly FingerprintService _fingerprintService;
+    private readonly ILogger<MatcherService> _logger;
 
-    public MatcherService(FingerprintStore store, FingerprintService fingerprintService)
+    public MatcherService(FingerprintStore store, FingerprintService fingerprintService, ILogger<MatcherService> logger)
     {
         _store = store;
         _fingerprintService = fingerprintService;
+        _logger = logger;
     }
 
     public async Task<MatchResultDto?> MatchAsync(byte[] wavBytes, int minConfidence)
     {
         var queryFingerprints = _fingerprintService.GenerateFingerprints(wavBytes);
+        _logger.LogInformation("Match: {Count} query fingerprints generated", queryFingerprints.Count);
         if (queryFingerprints.Count == 0)
             return null;
 
         var histogram = new Dictionary<int, Dictionary<int, int>>();
+        int totalHits = 0;
 
         foreach (var (hash, queryOffset) in queryFingerprints)
         {
             var matches = await _store.LookupHashAsync(hash);
+            totalHits += matches.Count;
 
             foreach (var (songId, dbOffset) in matches)
             {
@@ -55,6 +61,8 @@ public class MatcherService
                 }
             }
         }
+
+        _logger.LogInformation("Match: {Hits} total hash hits, best score={Best} (need {Min})", totalHits, bestCount, minConfidence);
 
         if (bestCount < minConfidence)
             return null;

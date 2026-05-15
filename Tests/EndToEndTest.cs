@@ -3,6 +3,7 @@ using Hum.Server.Data;
 using Hum.Server.Services;
 using Hum.Tests.Helpers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Hum.Tests;
@@ -43,9 +44,9 @@ public class EndToEndTest
             var spectrogram = new SpectrogramBuilder(config);
             var peakPicker  = new PeakPicker(config);
             var generator   = new FingerprintGenerator(config);
-            var fpService   = new FingerprintService(decoder, spectrogram, peakPicker, generator);
+            var fpService   = new FingerprintService(decoder, spectrogram, peakPicker, generator, NullLogger<FingerprintService>.Instance);
             var store       = new FingerprintStore(connString);
-            var matcher     = new MatcherService(store, fpService);
+            var matcher     = new MatcherService(store, fpService, NullLogger<MatcherService>.Instance);
 
             const string title  = "Synthetic Test Song";
             const string artist = "Test Artist";

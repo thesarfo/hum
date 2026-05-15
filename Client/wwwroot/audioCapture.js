@@ -35,6 +35,9 @@ window.captureAudio = function captureAudio(durationMs) {
 
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
+                    // Capture actual rate before closing — browser may have ignored the 44100 hint.
+                    var actualSampleRate = ctx.sampleRate;
+
                     source.disconnect();
                     node.disconnect();
                     stream.getTracks().forEach(function(t) { t.stop(); });
@@ -58,8 +61,8 @@ window.captureAudio = function captureAudio(durationMs) {
                     view.setUint32(16, 16, true);
                     view.setUint16(20, 1, true);
                     view.setUint16(22, 1, true);
-                    view.setUint32(24, sampleRate, true);
-                    view.setUint32(28, sampleRate * 2, true);
+                    view.setUint32(24, actualSampleRate, true);
+                    view.setUint32(28, actualSampleRate * 2, true);
                     view.setUint16(32, 2, true);
                     view.setUint16(34, 16, true);
                     writeString(36, 'data');

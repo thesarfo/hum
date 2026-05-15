@@ -9,7 +9,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<AudioCapture>();
 builder.Services.AddScoped(sp =>
 {
-    var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+    var http = new HttpClient
+    {
+        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
+        Timeout = TimeSpan.FromMinutes(10),
+    };
     return new SongService(http);
 });
 
