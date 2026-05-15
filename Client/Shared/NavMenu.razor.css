@@ -1,12 +1,13 @@
 .nav-header {
-    background: #000;
-    border-bottom: 0.5px solid #1a1a1a;
+    background: #ffffff;
+    border-bottom: 1px solid #e5edf5;
     height: 56px;
     display: flex;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: rgba(23, 23, 23, 0.06) 0px 3px 6px 0px;
 }
 
 .nav-inner {
@@ -20,12 +21,12 @@
 }
 
 .nav-brand {
-    font-family: 'Pastiche Grotesque', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 20px;
-    font-weight: 500;
-    color: #f5fbff;
+    font-weight: 300;
+    color: #000000;
     text-decoration: none;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.4px;
 }
 
 .nav-links {
@@ -34,10 +35,10 @@
 }
 
 .nav-link-item {
-    font-family: 'Inter Display', 'Inter', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: #a1a1a1;
+    color: #666666;
     text-decoration: none;
     padding: 6px 12px;
     border-radius: 6px;
@@ -45,13 +46,13 @@
 }
 
 .nav-link-item:hover {
-    color: #f5fbff;
-    background: #141414;
+    color: #000000;
+    background: #f2f7fe;
 }
 
 .nav-link-item.active {
-    color: #f5fbff;
-    background: #141414;
+    color: #533afd;
+    background: #f2f7fe;
 }
 
 @media (max-width: 375px) {

@@ -14,19 +14,19 @@
 }
 
 .ingest-title {
-    font-family: 'Pastiche Grotesque', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 40px;
-    font-weight: 500;
+    font-weight: 300;
     letter-spacing: -0.64px;
-    color: #f5fbff;
+    color: #000000;
     margin: 0;
 }
 
 .ingest-subtitle {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 18px;
     font-weight: 300;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
 }
 
@@ -40,10 +40,12 @@
 }
 
 .card {
-    background: #0b0b0b;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e5edf5;
     padding: 48px;
     width: 100%;
+    box-shadow: rgba(50, 50, 93, 0.12) 0px 16px 32px 0px;
 }
 
 .form-card {
@@ -59,94 +61,107 @@
 }
 
 .form-label {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: #a1a1a1;
+    color: #000000;
 }
 
 .form-input {
-    background: #141414;
-    color: #f5fbff;
-    border: 0.5px solid #a1a1a1;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #e5edf5;
     border-radius: 4px;
     padding: 12px 16px;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
     font-weight: 300;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-input:focus {
-    border-color: #0076dc;
+    border-color: #533afd;
+    box-shadow: 0 0 0 3px rgba(83, 58, 253, 0.08);
 }
 
 .form-input::placeholder {
-    color: #595e76;
+    color: #666666;
 }
 
 .form-file {
-    background: #141414;
-    color: #f5fbff;
-    border: 0.5px solid #a1a1a1;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #e5edf5;
     border-radius: 4px;
     padding: 12px 16px;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
     font-weight: 300;
     cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.form-file:hover {
+    border-color: #533afd;
 }
 
 .form-file::file-selector-button {
-    background: #0076dc;
-    color: #e6f5ff;
+    background: #533afd;
+    color: #ffffff;
     border: none;
-    border-radius: 100px;
+    border-radius: 4px;
     padding: 6px 16px;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-right: 12px;
+    transition: background 0.2s;
+}
+
+.form-file::file-selector-button:hover {
+    background: #4429e8;
 }
 
 .file-name {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 12px;
-    color: #0aa289;
+    color: #00d66f;
     margin: 0;
 }
 
 .file-reading {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 12px;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
 }
 
 .btn-submit {
-    background: #0076dc;
-    color: #e6f5ff;
+    background: #533afd;
+    color: #ffffff;
     border: none;
-    border-radius: 100px;
-    padding: 12px 32px;
-    font-family: 'Inter Display', sans-serif;
+    border-radius: 4px;
+    padding: 11.5px 32px;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     transition: background 0.2s, opacity 0.2s;
     min-width: 200px;
     align-self: center;
+    box-shadow: rgba(83, 58, 253, 0.2) 0px 4px 12px 0px;
 }
 
 .btn-submit:hover:not(:disabled) {
-    background: #0979c6;
+    background: #4429e8;
 }
 
 .btn-submit:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .submitting-indicator {
@@ -158,9 +173,9 @@
 }
 
 .submitting-text {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
     text-align: center;
 }
@@ -173,59 +188,60 @@
 
 .success-icon {
     font-size: 32px;
-    color: #0aa289;
+    color: #00d66f;
     margin: 0;
 }
 
 .success-title {
-    font-family: 'Pastiche Grotesque', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 28px;
-    font-weight: 400;
-    letter-spacing: -0.25px;
-    color: #f5fbff;
+    font-weight: 300;
+    letter-spacing: -0.26px;
+    color: #000000;
     margin: 0;
 }
 
 .success-id {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
 }
 
 .success-id span {
-    color: #0aa289;
-    font-weight: 500;
+    color: #00d66f;
+    font-weight: 400;
 }
 
 .btn-retry {
     background: transparent;
-    color: #0076dc;
+    color: #533afd;
     border: none;
     border-radius: 0;
     padding: 4px 0;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-top: -12px;
 }
 
 .btn-retry:hover {
-    color: #0979c6;
+    color: #4429e8;
 }
 
 .error-banner {
-    background: #141414;
-    border: 0.5px solid #d03845;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e5edf5;
+    border-left: 3px solid #d03845;
+    border-radius: 4px;
     padding: 16px 24px;
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 .error-banner p {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
     color: #d03845;
     margin: 0;
@@ -234,7 +250,7 @@
 @media (max-width: 640px) {
     .ingest-title {
         font-size: 32px;
-        letter-spacing: -0.51px;
+        letter-spacing: -0.32px;
     }
 
     .ingest-subtitle {

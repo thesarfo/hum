@@ -16,20 +16,20 @@
 }
 
 .identify-title {
-    font-family: 'Pastiche Grotesque', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 72px;
-    font-weight: 500;
-    letter-spacing: -1.44px;
+    font-weight: 300;
+    letter-spacing: -0.84px;
     line-height: 75.6px;
-    color: #f5fbff;
+    color: #000000;
     margin: 0;
 }
 
 .identify-subtitle {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 18px;
     font-weight: 300;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
 }
 
@@ -41,21 +41,22 @@
 }
 
 .btn-record {
-    background: #0076dc;
-    color: #e6f5ff;
+    background: #533afd;
+    color: #ffffff;
     border: none;
-    border-radius: 100px;
-    padding: 12px 32px;
-    font-family: 'Inter Display', sans-serif;
+    border-radius: 4px;
+    padding: 11.5px 32px;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     transition: background 0.2s;
     min-width: 200px;
+    box-shadow: rgba(83, 58, 253, 0.2) 0px 4px 12px 0px;
 }
 
 .btn-record:hover {
-    background: #0979c6;
+    background: #4429e8;
 }
 
 .recording-indicator {
@@ -69,7 +70,7 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: #d03845;
+    background: #533afd;
     animation: pulse 1s ease-in-out infinite;
 }
 
@@ -79,19 +80,21 @@
 }
 
 .recording-text {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    color: #f5fbff;
+    color: #000000;
     margin: 0;
 }
 
 .card {
-    background: #0b0b0b;
-    border-radius: 8px;
+    background: #f2f7fe;
+    border-radius: 6px;
+    border: 1px solid #e5edf5;
     padding: 64px;
     max-width: 480px;
     width: 100%;
     text-align: center;
+    box-shadow: rgba(50, 50, 93, 0.12) 0px 16px 32px 0px;
 }
 
 .result-card {
@@ -101,25 +104,25 @@
 }
 
 .result-title {
-    font-family: 'Pastiche Grotesque', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 40px;
-    font-weight: 500;
+    font-weight: 300;
     letter-spacing: -0.64px;
-    color: #f5fbff;
+    color: #000000;
     margin: 0;
 }
 
 .result-artist {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    color: #a1a1a1;
+    color: #666666;
     margin: 0;
 }
 
 .result-confidence {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
-    color: #0aa289;
+    color: #00d66f;
     margin: 12px 0 0;
 }
 
@@ -128,41 +131,41 @@
 }
 
 .not-found-text {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 18px;
-    font-weight: 500;
-    color: #f5fbff;
+    font-weight: 400;
+    color: #000000;
     margin: 0;
 }
 
 .not-found-hint {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
-    color: #a1a1a1;
+    color: #666666;
     margin: 8px 0 0;
 }
 
 .btn-retry {
     background: transparent;
-    color: #0076dc;
+    color: #533afd;
     border: none;
     border-radius: 0;
     padding: 4px 0;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
     margin-top: -12px;
 }
 
 .btn-retry:hover {
-    color: #0979c6;
+    color: #4429e8;
 }
 
 .error-banner {
-    background: #141414;
-    border: 0.5px solid #d03845;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e5edf5;
+    border-radius: 6px;
     padding: 16px 24px;
     max-width: 480px;
     width: 100%;
@@ -170,10 +173,11 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    box-shadow: rgba(23, 23, 23, 0.06) 0px 3px 6px 0px;
 }
 
 .error-banner p {
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 14px;
     color: #d03845;
     margin: 0;
@@ -182,26 +186,27 @@
 
 .btn-dismiss {
     background: transparent;
-    color: #a1a1a1;
-    border: 0.5px solid #a1a1a1;
-    border-radius: 100px;
+    color: #666666;
+    border: 1px solid #e5edf5;
+    border-radius: 4px;
     padding: 6px 16px;
-    font-family: 'Inter Display', sans-serif;
+    font-family: 'sohne-var', 'Söhne', system-ui, sans-serif;
     font-size: 12px;
     font-weight: 400;
     cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
 }
 
 .btn-dismiss:hover {
-    color: #f5fbff;
-    border-color: #f5fbff;
+    color: #000000;
+    border-color: #50617a;
 }
 
 @media (max-width: 640px) {
     .identify-title {
         font-size: 48px;
         line-height: 52px;
-        letter-spacing: -0.96px;
+        letter-spacing: -0.64px;
     }
 
     .identify-subtitle {
@@ -214,7 +219,7 @@
 
     .result-title {
         font-size: 28px;
-        letter-spacing: -0.45px;
+        letter-spacing: -0.26px;
     }
 
     .result-not-found {
