@@ -1,0 +1,11 @@
+**/.git
+**/.vs
+**/bin
+**/obj
+Tests/
+*.md
+*.m4a
+*.wav
+.opencode/
+**/node_modules
+*lscache
