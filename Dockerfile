@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
+RUN apt-get update && apt-get install -y python3 && ln -sf /usr/bin/python3 /usr/bin/python
+
 RUN dotnet workload install wasm-tools
 
 COPY Hum.sln .
