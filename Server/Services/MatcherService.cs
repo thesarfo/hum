@@ -75,7 +75,7 @@ public class MatcherService
         {
             Title = song.Title,
             Artist = song.Artist,
-            Confidence = (double)bestCount / queryFingerprints.Count
+            Confidence = bestCount
         };
     }
 }
