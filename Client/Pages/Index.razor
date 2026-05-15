@@ -32,7 +32,7 @@
                 <div class="card result-card">
                     <h2 class="result-title">@_result!.Title</h2>
                     <p class="result-artist">@_result.Artist</p>
-                    <p class="result-confidence">Confidence: @(_result.Confidence.ToString("P1"))</p>
+                    <p class="result-confidence">Score: @(_result.Confidence.ToString("F0"))</p>
                 </div>
                 <button class="btn-retry" @onclick="Reset">Record Another</button>
                 break;
